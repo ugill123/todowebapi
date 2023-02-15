@@ -11,6 +11,7 @@ using TodoWebApi.Models;
 namespace TodoWebApi.Controllers
 {
     [Route("api/[controller]")]
+    [Produces("application/json")]
     [ApiController]
     public class TasksController : ControllerBase
     {
@@ -22,24 +23,44 @@ namespace TodoWebApi.Controllers
         }
 
         // GET: api/Tasks
+        // GET: api/Tasks/5
+        /// <summary>
+        /// Fetch all todos from database.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     http://localhost:5142/api/Tasks/
+        ///
+        /// </remarks>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Tasks>>> GetTasks()
         {
-          if (_context.Tasks == null)
-          {
-              return NotFound();
-          }
+            if (_context.Tasks == null)
+            {
+                return NotFound();
+            }
             return await _context.Tasks.ToListAsync();
         }
 
         // GET: api/Tasks/5
+        /// <summary>
+        /// Fetch specific todo with ID.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     http://localhost:5142/api/Tasks/1
+        ///
+        /// </remarks>
+        
         [HttpGet("{id}")]
         public async Task<ActionResult<Tasks>> GetTasks(int id)
         {
-          if (_context.Tasks == null)
-          {
-              return NotFound();
-          }
+            if (_context.Tasks == null)
+            {
+                return NotFound();
+            }
             var tasks = await _context.Tasks.FindAsync(id);
 
             if (tasks == null)
@@ -51,7 +72,20 @@ namespace TodoWebApi.Controllers
         }
 
         // PUT: api/Tasks/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Update existing Todo.
+        /// </summary>
+         /// <remarks>
+        /// Sample request:
+        ///
+        ///     PUT /Todo
+        ///     {
+        ///        "id": 1,
+        ///        "name": "update task",
+        ///        "isComplete": true
+        ///     }
+        ///
+        /// </remarks>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTasks(int id, Tasks tasks)
         {
@@ -82,14 +116,33 @@ namespace TodoWebApi.Controllers
         }
 
         // POST: api/Tasks
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Creates a TodoItem.
+        /// </summary>
+        /// <returns>A newly created TodoItem</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /Todo
+        ///     {
+        ///        "id": 1,
+        ///        "name": "Item 1",
+        ///        "isComplete": true
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="201">Returns the newly created item</response>
+        /// <response code="400">If the item is null</response>
+
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Tasks>> PostTasks(Tasks tasks)
         {
-          if (_context.Tasks == null)
-          {
-              return Problem("Entity set 'TodoContext.Tasks'  is null.");
-          }
+            if (_context.Tasks == null)
+            {
+                return Problem("Entity set 'TodoContext.Tasks'  is null.");
+            }
             _context.Tasks.Add(tasks);
             await _context.SaveChangesAsync();
 
@@ -97,6 +150,9 @@ namespace TodoWebApi.Controllers
         }
 
         // DELETE: api/Tasks/5
+        /// <summary>
+        /// Deletes a specific TodoItem by providing ID.
+        /// </summary>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTasks(int id)
         {

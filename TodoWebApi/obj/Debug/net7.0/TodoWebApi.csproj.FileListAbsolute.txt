@@ -288,3 +288,5 @@ C:\Users\GILL\source\repos\TodoWebApi\TodoWebApi\obj\Debug\net7.0\refint\TodoWeb
 C:\Users\GILL\source\repos\TodoWebApi\TodoWebApi\obj\Debug\net7.0\TodoWebApi.pdb
 C:\Users\GILL\source\repos\TodoWebApi\TodoWebApi\obj\Debug\net7.0\TodoWebApi.genruntimeconfig.cache
 C:\Users\GILL\source\repos\TodoWebApi\TodoWebApi\obj\Debug\net7.0\ref\TodoWebApi.dll
+C:\Users\GILL\source\repos\todowebapi\TodoWebApi\bin\Debug\net7.0\TodoWebApi.xml
+C:\Users\GILL\source\repos\todowebapi\TodoWebApi\obj\Debug\net7.0\TodoWebApi.xml
